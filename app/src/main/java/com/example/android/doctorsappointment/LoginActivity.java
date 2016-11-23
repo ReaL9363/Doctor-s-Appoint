@@ -12,6 +12,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etUser, etPassword;
     Button btnLogin, btnCancel;
     private Intent intent;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,15 +22,18 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnCancel = (Button) findViewById(R.id.btnCancel);
+        userName = etUser.getText().toString();
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName = etUser.getText().toString();
+                //String userName = etUser.getText().toString();
                 intent = new Intent(getApplicationContext(), DoctorActivity.class);
+                intent.putExtra("userName", etUser.getText().toString());
                 //intent.putExtra("salesRepresentative", (Parcelable) salesRepresentative);
                 startActivity(intent);
-                Toast.makeText(LoginActivity.this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Welcome " + etUser.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }

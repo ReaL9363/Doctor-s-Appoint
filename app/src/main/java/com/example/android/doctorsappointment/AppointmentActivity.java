@@ -2,7 +2,9 @@ package com.example.android.doctorsappointment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +15,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AppointmentActivity extends AppCompatActivity implements View.OnClickListener {
     DoctorActivity doctorActivity;
@@ -21,9 +34,14 @@ public class AppointmentActivity extends AppCompatActivity implements View.OnCli
     EditText etAppointmentDate;
     EditText etAppointmentTime;
     TextView tvDoctorName;
+    TextView tvUser;
     Calendar myCalendar;
     Spinner spnAmPm;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    RequestQueue mRequestQueue;
+    private String url = "http://120.50.8.57/Test/appointment_up.php";
+    AlertDialog.Builder builder;
+    String userNameFix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +53,18 @@ public class AppointmentActivity extends AppCompatActivity implements View.OnCli
         etAppointmentDate = (EditText) findViewById(R.id.etAppointmentDate);
         etAppointmentTime = (EditText) findViewById(R.id.etAppointmentTime);
         tvDoctorName = (TextView) findViewById(R.id.tvDoctorNameFromLV);
+        //tvUser=(TextView) findViewById(R.id.tvUserName);
+        builder = new AlertDialog.Builder(this);
+        // Start the queue
+        // mRequestQueue.start();
+        mRequestQueue = Volley.newRequestQueue(this);
         //spnAmPm = (Spinner) findViewById(R.id.spnrAMPM);
 
-        String doctorName = getIntent().getStringExtra("doctorName");
-        tvDoctorName.setText(doctorName);
+        String doctorNameFix = getIntent().getStringExtra("doctorName");
+        tvDoctorName.setText(doctorNameFix);
+        userNameFix = getIntent().getStringExtra("userName").toString();
+        Toast.makeText(AppointmentActivity.this, "hello "+userNameFix, Toast.LENGTH_SHORT).show();
+        //tvUser.setText(userNameFix);
 
         etAppointmentDate.setOnClickListener(this);
         etAppointmentTime.setOnClickListener(this);
@@ -47,12 +73,66 @@ public class AppointmentActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View v) {
                 Toast.makeText(AppointmentActivity.this, "Data send successfully", Toast.LENGTH_SHORT).show();
-                etAppointmentDate.setText(" ");
+                sendDataToServer();
+                //etAppointmentDate.setText(" ");
                 //etAppointmentTime.setText(R.string.time);
-                etAppointmentTime.setText(" ");
+                // etAppointmentTime.setText(" ");
             }
         });
 
+    }
+
+    private void sendDataToServer() {
+        final String doctorName, patientName, time, date;
+        doctorName = getIntent().getStringExtra("doctorName".toString());
+        patientName = getIntent().getStringExtra("userName").toString();
+        time = etAppointmentTime.getText().toString();
+        date = etAppointmentDate.getText().toString();
+
+
+        // Formulate the request and handle the response.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        builder.setTitle("Server response");
+                        builder.setMessage("response " +
+                                ":" + response);
+                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                etAppointmentTime.setText(" ");
+                                etAppointmentTime.setText(" ");
+
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.e("Error: ", error.getMessage());
+                        Toast.makeText(AppointmentActivity.this, "Something went wrong ... :( ", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("doctor_name", doctorName);
+                params.put("patient_name", patientName);
+                params.put("time", time);
+
+                params.put("date", date);
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        mRequestQueue.add(stringRequest);
     }
 
 

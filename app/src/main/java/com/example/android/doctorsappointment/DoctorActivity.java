@@ -32,12 +32,13 @@ public class DoctorActivity extends AppCompatActivity {
 
     private static final String url = "http://120.50.8.57/Test/doctor.php";
     //shahriar vai.need to parse
-   // private static final String url = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=5&limit=10";
+    // private static final String url = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=5&limit=10";
     //private static final String url = "https://raw.githubusercontent.com/mobilesiri/Android-Custom-Listview-Using-Volley/master/richman.json";
     private ProgressDialog pDialog;
     private List<Doctor> doctorList = new ArrayList<>();
     private ListView listView;
     private DoctorAdapter doctorAdapter;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,8 @@ public class DoctorActivity extends AppCompatActivity {
         // Showing progress dialog before making http request
         pDialog.setMessage("Loading...");
         //pDialog.show();
+        userName = getIntent().getStringExtra("userName");
+        Toast.makeText(this, "Hi i m " + userName, Toast.LENGTH_SHORT).show();
 
         /*final ArrayList<Doctor> doctorArrayList = new ArrayList<Doctor>();
         doctorArrayList.add(new Doctor("Abul"));
@@ -97,6 +100,7 @@ public class DoctorActivity extends AppCompatActivity {
                 Doctor doctor = doctorList.get(position);
                 Intent intent = new Intent(DoctorActivity.this, AppointmentActivity.class);
                 intent.putExtra("doctorName", doctor.getmDoctorName().toString());
+                intent.putExtra("userName", userName);
                 startActivity(intent);
                 // Toast.makeText(DoctorActivity.this, "You clicked" + doctor.getmDoctorName(), Toast.LENGTH_SHORT).show();
             }

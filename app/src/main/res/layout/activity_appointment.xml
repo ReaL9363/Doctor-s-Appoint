@@ -60,7 +60,6 @@
             android:layout_marginBottom="5dp"></EditText>
 
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/lloAppointmentTime"
         android:layout_width="match_parent"
@@ -94,6 +93,41 @@
              android:prompt="@string/time_prompt"></Spinner>-->
 
     </LinearLayout>
+
+    <!--<LinearLayout
+        android:id="@+id/lloUserName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/lloAppointmentTime">
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight=".3"
+            android:text="User : "
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:paddingTop="5dp"/>
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight=".7"
+            android:hint="@string/time"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp"></TextView>
+
+        &lt;!&ndash; <Spinner
+             android:id="@+id/spnrAMPM"
+             android:layout_width="0sp"
+             android:layout_height="wrap_content"
+             android:layout_weight=".3"
+             android:entries="@array/timeFormate"
+             android:prompt="@string/time_prompt"></Spinner>&ndash;&gt;
+
+    </LinearLayout>
+-->
 
     <Button
         android:id="@+id/btnAppointmentSubmit"
