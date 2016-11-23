@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Doctor\'s Appointment</string>
+    <string name="appointment">Appointment</string>
+    <string name="date">Choose Date</string>
+    <string name="time">Choose Time</string>
+    <string name="time_prompt">Choose Format</string>
+    <string-array name="timeFormate">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+</resources>
