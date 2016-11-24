@@ -62,8 +62,8 @@ public class AppointmentActivity extends AppCompatActivity implements View.OnCli
 
         String doctorNameFix = getIntent().getStringExtra("doctorName");
         tvDoctorName.setText(doctorNameFix);
-        userNameFix = getIntent().getStringExtra("userName").toString();
-        Toast.makeText(AppointmentActivity.this, "hello "+userNameFix, Toast.LENGTH_SHORT).show();
+        //userNameFix = getIntent().getStringExtra("userName").toString();
+        //Toast.makeText(AppointmentActivity.this, "hello " + userNameFix, Toast.LENGTH_SHORT).show();
         //tvUser.setText(userNameFix);
 
         etAppointmentDate.setOnClickListener(this);
@@ -101,7 +101,7 @@ public class AppointmentActivity extends AppCompatActivity implements View.OnCli
                         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                etAppointmentTime.setText(" ");
+                                etAppointmentDate.setText(" ");
                                 etAppointmentTime.setText(" ");
 
                             }
@@ -212,4 +212,11 @@ public class AppointmentActivity extends AppCompatActivity implements View.OnCli
 
         etAppointmentTime.setText(aTime);
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
+
+
 }

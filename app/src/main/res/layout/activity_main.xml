@@ -34,6 +34,7 @@
             android:paddingBottom="16dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
+            android:text="real73"
             android:gravity="left"
             android:padding="5dp"
             android:textSize="15sp" />
@@ -67,6 +68,7 @@
             android:gravity="left"
             android:inputType="textPassword"
             android:padding="5dp"
+            android:text="12345"
             android:textSize="15sp" />
     </LinearLayout>
 

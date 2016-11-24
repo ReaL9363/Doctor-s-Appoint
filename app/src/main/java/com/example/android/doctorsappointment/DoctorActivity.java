@@ -112,7 +112,7 @@ public class DoctorActivity extends AppCompatActivity {
 
     }
 
-    @Override
+   /* @Override
     public void onDestroy() {
         super.onDestroy();
         hidePDialog();
@@ -123,5 +123,5 @@ public class DoctorActivity extends AppCompatActivity {
             pDialog.dismiss();
             pDialog = null;
         }
-    }
+    }*/
 }
